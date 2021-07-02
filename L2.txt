@@ -1,0 +1,210 @@
+package com.company;
+
+import java.util.InputMismatchException;
+import java.util.Random;
+import java.util.Scanner;
+
+
+//33.Створіть enum Посади, яке відповідає можливій структурі посад підприємства.
+// Продемонструйте  можливість задавати властивості, конструктори та методи в enum.
+// Забезпечте при цьому можливості змінювати посадові оклади та кількість днів відпустки
+class Enum {
+
+    public static void main(String[] args) {
+
+        System.out.println("1. " + Position.HEADMASTER.getCode());
+        System.out.println("2. " + Position.CHIEF_ACCOUNTANT.getCode());
+        System.out.println("3. " + Position.ACCOUNTANT.getCode());
+        Scanner input0 = new Scanner(System.in);
+        System.out.println("какую должность редактировать?");
+        int res = input0.nextInt();
+        Position op1;
+        if (res == 1) {
+            op1 = Position.HEADMASTER;
+            Scanner input = new Scanner(System.in);
+            System.out.println("какой оклад?");
+            int res2 = input.nextInt();
+            Scanner input2 = new Scanner(System.in);
+            System.out.println("сколько дней?");
+            int res3 = input2.nextInt();
+            op1.Swap(res2, res3);
+            System.out.println(op1.getCode());
+        } else if (res == 2) {
+            op1 = Position.CHIEF_ACCOUNTANT;
+            Scanner input = new Scanner(System.in);
+            System.out.println("какой оклад?");
+            int res2 = input.nextInt();
+            Scanner input2 = new Scanner(System.in);
+            System.out.println("сколько дней?");
+            int res3 = input2.nextInt();
+            op1.Swap(res2, res3);
+            System.out.println(op1.getCode());
+        } else if (res == 3) {
+            op1 = Position.ACCOUNTANT;
+            Scanner input = new Scanner(System.in);
+            System.out.println("какой оклад?");
+            int res2 = input.nextInt();
+            Scanner input2 = new Scanner(System.in);
+            System.out.println("сколько дней?");
+            int res3 = input2.nextInt();
+            op1.Swap(res2, res3);
+            System.out.println(op1.getCode());
+        } else {
+            System.out.println("error");
+        }
+        System.out.println("1. " + Position.HEADMASTER.getCode());
+        System.out.println("2. " + Position.CHIEF_ACCOUNTANT.getCode());
+        System.out.println("3. " + Position.ACCOUNTANT.getCode());
+    }
+}
+
+enum Position {
+    HEADMASTER("HeadMaster", 3000, 30),
+    CHIEF_ACCOUNTANT("Chief Accountant", 1900, 21),
+    ACCOUNTANT("Accountant", 1200, 14);
+
+    private String nameOfPosition;
+    private int salary;
+    private int dayOfVacation;
+
+    Position(String nameOfPosition, int salary, int dayOfVacation) {
+        this.nameOfPosition = nameOfPosition;
+        this.salary = salary;
+        this.dayOfVacation = dayOfVacation;
+    }
+
+    public String getCode() {
+        return "Position: " + nameOfPosition + " Salary: " +
+                salary + " Day of vacation: " + dayOfVacation;
+    }
+
+    void Swap(int salary2, int dayOfVacation2) {
+        salary = salary2;
+        dayOfVacation = dayOfVacation2;
+    }
+}
+
+//39 Продемонструйте у коді  2 способа  обробки виключних ситуацій у методі
+// (з try-catch и  throws), а також особливості використання блока finally.
+// У якості обробляємо виключення оберіть будь яке =checked= виключення.
+class Exc2 {
+    public static int Divide(int x, int y) {
+        return x / y;
+    }
+
+    public static void Divide2() throws ArithmeticException {
+        System.out.println(" в теле метода");
+        int d = 0;
+        int a = 42 / d;
+        System.out.println(a);
+        //throw new ArithmeticException("demo");
+    }
+
+    public static void main(String args[]) {
+        try {
+            Scanner input = new Scanner(System.in);
+            System.out.print("Input number 1 for divide: ");
+            int n = input.nextInt();
+            Scanner input2 = new Scanner(System.in);
+            System.out.print("Input number 2 for divide: ");
+            int b = input2.nextInt();
+            System.out.print(Divide(n, b));
+        } catch (ArithmeticException e) {
+            System.out.println("деление на ноль");
+        } finally {
+            System.out.println("\nблок finally");
+        }
+        try {
+            Divide2();
+        } catch (ArithmeticException e2) {
+            System.out.println("Перехвачено: " + e2);
+        }
+    }
+}
+//42
+//Продемонструйте у коді генерацію свого виключення AgeStudentException у конструкторі
+//класу Student при спробі створити об'єкт зі значенням віку помилковим.
+
+class AgeStudentException extends Exception {
+    public AgeStudentException() {
+        super("Помилковий вік");
+    }
+}
+
+class Student {
+    String name;
+    int age;
+
+    Student(String name, int age) throws AgeStudentException {
+        try {
+            if (age < 15) {
+                throw new AgeStudentException();
+            }
+        } catch (AgeStudentException ex) {
+            System.out.print("Ви впевнені що вам " + age + "років?\n");
+        }
+        this.name = name;
+        this.age = age;
+    }
+
+    public void print() {
+        System.out.printf("Name: %s Age:%s\n", name, age);
+    }
+}
+
+//41
+/*Створіть код, у якому генеруються слідуючі типи виключень  ArrayIndexOutOfBoundsException,
+ *  ArithmeticException, NullPointerException, IndexOutOfBoundsException, Exception.
+ *  Продемонструйте відмінність між =checked=  та  =unchecked= виключеннями.*/
+
+// использивание вложеных блоков try
+class Ex4 {
+
+    public static void main(String[] args) {
+
+        try {
+            //ArithmeticException
+            int a, b;
+            b = 0;
+            a = 5 / b;
+            System.out.println(a);
+
+            try {
+                // ArrayIndexOutOfBoundsException
+                Random random = new Random();
+                int[] arr = new int[10];
+                for (int i = 0; i < arr.length; i++) {
+                    arr[i] = random.nextInt(10);
+                    System.out.println(arr[i]);
+                }
+                System.out.println("_________");
+                System.out.println(arr[10]);
+            } catch (ArrayIndexOutOfBoundsException e8) {
+                System.out.println("Нельзя обращаться к масиву индексом который равен или больше его размера ");
+            }
+        } catch (ArithmeticException е5) {
+            System.out.println("Делить на ноль нельзя!!!!");
+        }
+
+        //NullPointerException
+        try {
+            throw new NullPointerException();
+        } catch (NullPointerException e) {
+            System.out.println("Исключение NullPointerException обработано ");
+        }
+        //IndexOutOfBoundsException
+        try {
+            String str1 = new String("laptop");
+
+            System.out.print("Найденный индекс: ");
+            System.out.println(str1.charAt(9));
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("IndexOutOfBoundsException");
+        }
+        //Exception
+        catch (Exception e) {
+
+        }
+
+    }
+}

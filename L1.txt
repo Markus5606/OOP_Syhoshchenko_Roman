@@ -1,0 +1,122 @@
+package com.company;
+import java.util.Scanner;
+import java.util.Arrays;
+
+//Створіть метод, який дозволяє вставляти в будь яку позицію масиву будь яке число.
+// Метод повинен повертати новий масив.
+   class Input {
+       public static int[] inputIs(int p, int e, int[] arr){
+           int[] array2 = new int[arr.length + 1];
+           System.arraycopy(arr,0,array2,0,p);
+           array2[p-1] = e;
+           System.arraycopy(arr,p-1,array2, p,arr.length-(p-1));
+            return array2;
+       }
+       public static void main(String[] args) {
+           int[] array1 = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+           for(int i = 0; i < array1.length; i++) {
+               System.out.print(array1[i] + " ");
+           }
+           System.out.println();
+           Scanner input = new Scanner(System.in);
+           int pos;
+           System.out.println("в какое место вставить цифру?");
+           pos = input.nextInt();
+           Scanner input2 = new Scanner(System.in);
+           int elem;
+           System.out.println("какую вставить цифру?");
+           elem = input.nextInt();
+           System.out.println(Arrays.toString(inputIs(pos, elem, array1)));
+       }
+   }
+   
+   //Створіть метод, який дозволяє видаляти будь який елемент по індексу в
+   // одновимірному масиві int[]. Новий масив повинен повертатися з методу.
+ class Remove {
+    public static int[] removeIs(int index, int[] arr) {
+        int[] newArr = new int[arr.length -1];
+        if(index < 0 || index > arr.length) {
+            return arr;
+        }
+        int j = 0;
+        for(int i = 0; i < arr.length; i++) {
+            if(i == index) {
+                i++;
+            }
+            newArr[j++] = arr[i];
+        }
+        return newArr;
+    }
+    public static void main(String[] args) {
+        int[] array1 = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+        for(int i = 0; i <= array1.length-1; i++){
+            System.out.print(array1[i] + " ");
+        }
+        System.out.println();
+        Scanner input = new Scanner(System.in);
+        // int index2;
+        System.out.println("Введите индекс цифры которую хотите удалить");
+        //index2 = input.nextInt();
+        System.out.println(Arrays.toString(removeIs(input.nextInt(), array1)));
+    }
+}
+
+//Створіть метод, який сортує будь який масив int[] методом вставок.
+ class Insertion {
+    public static void sort(int[] arr) {
+        for (int k = 1; k < arr.length; k++) {
+            int newElement = arr[k];
+            int location = k - 1;
+            while (location >= 0 && arr[location] > newElement) {
+                arr[location + 1] = arr[location];
+                location--;
+            }
+            arr[location + 1] = newElement;
+        }
+    }
+    public static void main(String[] args) {
+        int[] array = {2, 9, 16, 0, 55};
+        sort(array);
+        System.out.println(Arrays.toString(array));
+    }
+}
+
+//Створіть метод, який може підрахувати кількість голосних букв 
+// у будь якому слові (мова українська)
+class Count {
+    public static void main(String[] args) {
+        String word;
+        int numberOfVowls = 0, numberofCosonents = 0;
+        Scanner myinput = new Scanner(System.in);
+
+        System.out.println("Please enter a word.");
+        word = myinput.next();
+        char[] wordc = word.toCharArray();
+
+        for(int w = 0;w < word.length();w++) {
+            if(wordc[w] == 'а' || wordc[w] == 'о' || wordc[w] == 'у'
+                    || wordc[w] == 'е' || wordc[w] == 'и'
+                    || wordc[w] == 'і') numberOfVowls++;
+            else numberofCosonents++;}
+        System.out.println("гласные: " + numberOfVowls);
+        System.out.println("согласные: " + numberofCosonents);
+    }
+}
+
+//Створіть метод, який рекурсивно рахує суму елементів масиву int[],
+// який передається як параметр методу
+class Recursion{
+    public static int sum(int[] array, int index) {
+        if (index == 0) {
+            return 0;
+        } else {
+            return array[index-1] + sum(array, index - 1);
+        }
+    }
+    public static void main(String[] args){
+        int[] arr = {5, 10, 15, 20};
+        System.out.println(sum(arr, arr.length));
+    }
+}
+

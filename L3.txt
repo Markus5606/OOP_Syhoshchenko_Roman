@@ -1,0 +1,187 @@
+package com.company;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Comparator;
+
+//59.Створіть наступну модель: Є громадське об'єднання рибалок, які кожного місяця проводять конкурс 
+// серед своїх членів на звання кращого. Умови конкурсу - кращий рибалка визначається по максимальній 
+// вазі зловленої риби за період в кожному виді риб(судак, щука та інше). Таким чином шукається рибалка 
+// який у лютому зловив більше усіх судака наприклад.Модель повинна дозволяти приймати у спільноту 
+// нових членів та імітувати ловлю риби, формувати по кожному звіт за період з перерахуванням  перемог 
+// рибалки у вигляді: Карасі-20 кг, Судак-12 кг та інше.
+
+class fisher implements Comparable<fisher>, Comparator<fisher> {
+
+    String name;
+    int zander;//судак
+    int crucian;// карась
+    int calm; // молюск
+
+    public fisher(String name, int zander, int crucian, int calm) {
+        this.name = name;
+        this.zander = zander;
+        this.crucian = crucian;
+        this.calm = calm;
+    }
+
+    public int getZander() {
+        return zander;
+    }
+
+    public int getCrucian() {
+        return crucian;
+    }
+
+    public int getCalm() {
+        return calm;
+    }
+
+    @Override
+    public int compareTo(fisher o) {//судак 
+        return this.getZander() - o.getZander();
+    }
+
+    public static Comparator<fisher> crucianC = new Comparator<fisher>() {
+        @Override
+        public int compare(fisher o1, fisher o2) {//карась
+            return o1.getCrucian() - o2.getCrucian();
+        }
+    };
+    // молюск
+    public static Comparator<fisher> calmC = new Comparator<fisher>() {
+        @Override
+        public int compare(fisher o1, fisher o2) {
+            return o1.getCalm() - o2.getCalm();
+        }
+    };
+
+    public void report() {
+        System.out.print("Имя учасника: " + name + ";" + " Вес судака: " + zander + ";" + " Вес карася: " + crucian + ";" + " Вес молюска: " + calm + ";" + "\n");
+    }
+
+    @Override
+    public String toString() {
+        return "Имя учасника: " + name + ";" + " Вес судака: " + zander + ";" + " Вес карася: " + crucian + ";" + " Вес молюска: " + calm + ";" + "\n";
+    }
+
+
+    public static void main(String[] args) {
+        int j = 0;
+        for (int i = 0; i < 12; i++) {
+            j++;
+            System.out.println("Конкурс за " + j + " месяц");
+            ArrayList<fisher> fisher1 = new ArrayList<>();
+
+            fisher man1 = new fisher("Дмитрий", 0 + (int) (Math.random() * 50), 0 + (int) (Math.random() * 50), 0 + (int) (Math.random() * 50));
+            fisher man2 = new fisher("Василий", 0 + (int) (Math.random() * 50), 0 + (int) (Math.random() * 50), 0 + (int) (Math.random() * 50));
+            fisher man3 = new fisher("Иван", 0 + (int) (Math.random() * 50), 0 + (int) (Math.random() * 50), 0 + (int) (Math.random() * 50));
+            fisher man4 = new fisher("Евгений", 0 + (int) (Math.random() * 50), 0 + (int) (Math.random() * 50), 0 + (int) (Math.random() * 50));
+            man1.report();
+            man2.report();
+            man3.report();
+            man4.report();
+
+            fisher1.add(man1);
+            fisher1.add(man2);
+            fisher1.add(man3);
+            fisher1.add(man4);
+
+            int n1 = 0;
+            int n2 = 0;
+            int n3 = 0;
+            int n4 = 0;
+
+            System.out.println("Соревнование по судаку ");
+            Collections.sort(fisher1, Collections.reverseOrder());
+            System.out.println(fisher1.toString());
+            System.out.println("Победил : " + fisher1.get(0));
+            if (fisher1.get(0) == man1) {
+                n1++;
+            }
+            if (fisher1.get(0) == man2) {
+                n2++;
+            }
+            if (fisher1.get(0) == man3) {
+                n3++;
+            }
+            if (fisher1.get(0) == man4) {
+                n4++;
+            }
+
+
+            System.out.println("Соревнование по карасю ");
+            Collections.sort(fisher1, Collections.reverseOrder(fisher.crucianC));
+            System.out.println(fisher1.toString());
+            System.out.println("Победил : " + fisher1.get(0));
+            if (fisher1.get(0) == man1) {
+                n1++;
+            }
+            if (fisher1.get(0) == man2) {
+                n2++;
+            }
+            if (fisher1.get(0) == man3) {
+                n3++;
+            }
+            if (fisher1.get(0) == man4) {
+                n4++;
+            }
+
+
+            System.out.println("Соревнование по молюску");
+            Collections.sort(fisher1, Collections.reverseOrder(fisher.calmC));
+            System.out.println(fisher1.toString());
+            System.out.println("Победил : " + fisher1.get(0));
+            if (fisher1.get(0) == man1) {
+                n1++;
+            }
+            if (fisher1.get(0) == man2) {
+                n2++;
+            }
+            if (fisher1.get(0) == man3) {
+                n3++;
+            }
+            if (fisher1.get(0) == man4) {
+                n4++;
+            }
+            System.out.println("дмитрий " + n1 + " василий " + n2 + " иван " + n3 + " евгений" + n4);
+
+            ArrayList<Integer> count = new ArrayList<Integer>();
+            count.add(n1);
+            count.add(n2);
+            count.add(n3);
+            count.add(n4);
+
+
+            int max = count.get(0);
+
+            for (Integer i1 : count) {
+                if (i1 > max)
+                    max = i1;
+            }
+            if (max == n1) {
+                System.out.println("Победил Дмитрий");
+            }
+            if (max == n2) {
+                System.out.println("Победил Василий");
+            }
+            if (max == n3) {
+                System.out.println("Победил Иван");
+            }
+            if (max == n4) {
+                System.out.println("Победил Евгений");
+            }
+        }
+
+
+    }
+
+    @Override
+    public int compare(fisher o1, fisher o2) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+}
